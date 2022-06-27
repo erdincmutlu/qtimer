@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+p {
+  text-align: center;
+  font-size: 40px;
+  margin-top: 0px;
+}
+
+table {
+  text-align: center;
+  font-size: 40px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-width: thick;
+  border-color: black;
+}
+
+td {
+  border: 1px solid #999;
+  padding: 20px;
+}
+
+td#THIRD {border:inset 4px red; background-color:lightblue;}
+
+.space {
+  width: 40px;
+  height: auto;
+  display: inline-block;
+}
+
+button {
+  font-size: 16px;
+}
+
+</style>
+</head>
+<body>
+
+<div>
+  <div class="space"></div>
+  <button id="btn">Start</button>
+  <div class="space"></div>
+  <button id="inc">+++++</button>
+  <div class="space"></div>
+  <button id="dec">-----</button>
+</div>
+
+<p id="debug"></p>
+<p id="status"></p>
+<p id="time"></p>
+<p id="question"></p>
+<p id="qtime"></p>
+
+<p> 
+  <table>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td id="THIRD">3</td>
+      <td>4</td>
+      <td>5</td>
+      <td id="THIRD">6</td>
+      <td>7</td>
+      <td>8</td>
+      <td id="THIRD">9</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>B</td>
+      <td id="THIRD">C</td>
+      <td>D</td>
+      <td>E</td>
+      <td id="THIRD">F</td>
+      <td>G</td>
+      <td>H</td>
+      <td id="THIRD">I</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>11</td>
+      <td id="THIRD">12</td>
+      <td>13</td>
+      <td>14</td>
+      <td id="THIRD">15</td>
+      <td>16</td>
+      <td>17</td>
+      <td id="THIRD">18</td>
+    </tr>
+    <tr>
+      <td>J</td>
+      <td>K</td>
+      <td id="THIRD">L</td>
+      <td>M</td>
+      <td>N</td>
+      <td id="THIRD">O</td>
+      <td>P</td>
+      <td>Q</td>
+      <td id="THIRD">R</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>20</td>
+      <td id="THIRD">21</td>
+      <td>22</td>
+      <td>23</td>
+      <td id="THIRD">24</td>
+      <td>25</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <td>S</td>
+      <td>T</td>
+      <td id="THIRD">U</td>
+      <td>V</td>
+      <td>W</td>
+      <td id="THIRD">X</td>
+      <td>Y</td>
+      <td>Z</td>
+    </tr>
+  </table>
+</p>
+
+<script>
+
+const tquestion_const = 50;
+const ttime_const = 15*60;
+
+var intervalId;
+var seconds = 0;
+var question = 1;
+var tquestion = tquestion_const;
+var ttime = ttime_const;
+var perq = ttime/tquestion;
+
+updateAll()
+document.getElementById("status").innerHTML = "Click start button...";
+
+function run() {
+  seconds = 0;
+  tquestion = tquestion_const;
+  ttime = ttime_const;
+  perq = ttime/tquestion;
+
+  // Clear if start was clicked before.
+  clearInterval(intervalId);
+  
+  // Update the count every 1 second
+  intervalId = setInterval(function() {
+    question = Math.floor(seconds/perq) +1;
+    
+    if (question === tquestion+1 ) {
+      document.getElementById("status").innerHTML = "FINISHED";
+      clearInterval(intervalId);
+    } else {
+      document.getElementById("status").innerHTML = "GO GO GO";   
+    }
+    updateAll()
+
+    seconds = seconds+1;
+  }, 1000);
+}
+
+function updateAll() {
+  var minutes = Math.floor(seconds / 60 );
+  var second_display = seconds % 60 ;
+
+  tLeft = ttime - seconds
+  var leftminutes = Math.floor(tLeft / 60 );
+  var leftsecond = tLeft % 60 ;
+
+  document.getElementById("time").innerHTML = "<span style='color: red;'>" + minutes + "m " + second_display + "s</span><br>" +
+   "Time left: <span style='color: red;'>" + leftminutes + "m " + leftsecond + "s</span>";
+
+  if (question === tquestion +1) {
+    question = tquestion
+  }
+  remain = tquestion-question
+  document.getElementById("question").innerHTML = "At question: <span style='color: red;'>" + question +
+    "</span> remain:<span style='color: red;'>" + remain + "</span>";
+
+  qtleft = perq-(seconds%perq)
+  document.getElementById("qtime").innerHTML = "Question time left " + "<span style='color: red;'>" + qtleft +"</span>";
+}
+
+let btn = document.getElementById("btn");
+btn.addEventListener('click', event => {
+  run();
+});
+
+let incBtn = document.getElementById("inc");
+incBtn.addEventListener('click', event => {
+  seconds = seconds +1;
+  document.getElementById("debug").innerHTML = "Increment seconds now:" + seconds + " question:" + question;
+  updateAll()
+});
+    
+let decBtn = document.getElementById("dec");
+decBtn.addEventListener('click', event => {
+  seconds--;
+  document.getElementById("debug").innerHTML = "Decrement seconds now:" + seconds + " question:" + question;
+  updateAll()
+});
+
+</script>
+
+</body>
+</html>
