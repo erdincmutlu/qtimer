@@ -1,0 +1,33 @@
+p {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 0px;
+}
+  
+table {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-width: thick;
+    border-color: black;
+}
+  
+td {
+    border: 1px solid #999;
+    padding: 20px;
+}
+  
+td#THIRD {border:inset 4px red; background-color:lightblue;}
+  
+.space {
+    width: 40px;
+    height: auto;
+    display: inline-block;
+}
+  
+button {
+    font-size: 16px;
+}
+  
